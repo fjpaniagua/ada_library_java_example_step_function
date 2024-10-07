@@ -30,7 +30,14 @@ jobs:
         with:
           milliseconds: 1000
 
-#      - name: Compile the project
+      # This action sets up the JFrog CLI with the Artifactory URL and access token
+      - name: Configure JFrog Cli with Access Token
+        uses: jfrog/setup-jfrog-cli@v4
+        env:
+          JF_URL: ${{ vars.ARTIFACTORY_URL }}
+          JF_ACCESS_TOKEN: ${{ secrets.ARTIFACTORY_ACCESS_TOKEN }}
+
+        #      - name: Compile the project
 #        run: |
 #          mvn -B compile
 #
