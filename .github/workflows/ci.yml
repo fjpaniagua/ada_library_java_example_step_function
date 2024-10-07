@@ -28,14 +28,18 @@ jobs:
         with:
           milliseconds: 1000
 
-      - name: Compile the project
-        run: |
-          mvn -B compile
+#      - name: Compile the project
+#        run: |
+#          mvn -B compile
+#
+#      - name: Launch the tests without AT or IT
+#        run: |
+#          mvn -B test -pl !testAT -pl !testIT
+#
+#      - name: Install the dependencies
+#        run: |
+#          mvn -Binstall -Dmaven.test.skip=true -DskipTests -pl !testAT -pl !testIT -Dmaven.wagon.http.retryHandler.count=3
 
-      - name: Launch the tests without AT or IT
+      - name: Run the tests in parallel
         run: |
-          mvn -B test -pl !testAT -pl !testIT
-
-      - name: Install the dependencies
-        run: |
-          mvn -B install -Dmaven.test.skip=true -DskipTests -pl !testAT -pl !testIT -Dmaven.wagon.http.retryHandler.count=3
+          parallel --gnu -a tests.parallel || false
