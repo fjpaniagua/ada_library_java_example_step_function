@@ -48,6 +48,11 @@ jobs:
 #        run: |
 #          mvn antrun:run@attach-shaded-jar deploy -Dskip=true -Dmaven.shade.skip=true -Dmaven.main.skip=true -Djacoco.skip=true -Dmaven.javadoc.skip=true -Dmaven.test.skip=true -DskipTests -Dmaven.install.skip=true -Dspring-boot.repackage.skip=true -Ddocker.skip=truemvn antrun:run@attach-shaded-jar deploy -B ${profilesOpt} -Dskip=true -Dmaven.shade.skip=true -Dmaven.main.skip=true -Djacoco.skip=true -Dmaven.javadoc.skip=true -Dmaven.test.skip=true -DskipTests -Dmaven.install.skip=true -Dspring-boot.repackage.skip=true -Ddocker.skip=true -Dmaven.resources.skip=true -DskipAnnotationProcessing=true -DretryFailedDeploymentCount=2 -pl !testAT
 
+      - name: Build information
+        run: |
+          pwd
+          ls
+
       - name: Deploy Configs to Artifactory
         uses: actions/upload-artifact@v4
         with:
