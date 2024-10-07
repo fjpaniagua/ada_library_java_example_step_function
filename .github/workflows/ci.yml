@@ -57,4 +57,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: conf-files-in-resources-config
-          path: src/main/resources/config/**/*.conf
+          path: ada_library_java_example_step_function-lib/src/main/resources/config/**/*.conf
