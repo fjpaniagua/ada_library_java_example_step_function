@@ -9,6 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    # Necessary for docker push
     permissions: write-all
 
     steps:
