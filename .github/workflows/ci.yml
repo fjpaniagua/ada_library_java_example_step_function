@@ -48,13 +48,14 @@ jobs:
 #        run: |
 #          mvn antrun:run@attach-shaded-jar deploy -Dskip=true -Dmaven.shade.skip=true -Dmaven.main.skip=true -Djacoco.skip=true -Dmaven.javadoc.skip=true -Dmaven.test.skip=true -DskipTests -Dmaven.install.skip=true -Dspring-boot.repackage.skip=true -Ddocker.skip=truemvn antrun:run@attach-shaded-jar deploy -B ${profilesOpt} -Dskip=true -Dmaven.shade.skip=true -Dmaven.main.skip=true -Djacoco.skip=true -Dmaven.javadoc.skip=true -Dmaven.test.skip=true -DskipTests -Dmaven.install.skip=true -Dspring-boot.repackage.skip=true -Ddocker.skip=true -Dmaven.resources.skip=true -DskipAnnotationProcessing=true -DretryFailedDeploymentCount=2 -pl !testAT
 
-      - name: Build information
-        run: |
-          pwd
-          ls
-
       - name: Deploy Configs to Artifactory
         uses: actions/upload-artifact@v4
         with:
           name: conf-files-in-resources-config
           path: ada_library_java_example_step_function-lib/src/main/resources/config/**/*.conf
+
+      - name: Generate and deploy docker image
+        run: |
+          docker login docker.pkg.github.com --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}"
+          docker build . 
+          docker push docker.pkg.github.com/fjpaniagua/ada_library_java_example/ada_library_java_example:0.0.1
