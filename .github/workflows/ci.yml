@@ -57,5 +57,5 @@ jobs:
       - name: Generate and deploy docker image
         run: |
           docker login docker.pkg.github.com --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}"
-          docker build . -f ada_library_java_example_step_function-lib/src/main/resources/Dockerfile
-          docker push docker.pkg.github.com/fjpaniagua/ada_library_java_example/ada_library_java_example:0.0.1
+          docker build -t docker.pkg.github.com/fjpaniagua/ada_library_java_example/ada_library_java_example:latest . -f ada_library_java_example_step_function-lib/src/main/resources/Dockerfile
+          docker push docker.pkg.github.com/fjpaniagua/ada_library_java_example/ada_library_java_example:latest
