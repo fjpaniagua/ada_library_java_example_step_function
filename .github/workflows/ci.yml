@@ -52,7 +52,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: conf-files-in-resources-config
-          path: |
-            pwd
-            ls -alrt
-            src/main/resources/config/*.conf
+          path: src/main/resources/config/**/*.conf
