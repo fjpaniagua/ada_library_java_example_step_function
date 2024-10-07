@@ -37,9 +37,12 @@ jobs:
           JF_URL: ${{ vars.ARTIFACTORY_URL }}
           JF_ACCESS_TOKEN: ${{ secrets.ARTIFACTORY_ACCESS_TOKEN }}
 
-      - name: Compile the project
-        run: |
-          mvn -B compile
+      # The following configuration does not work properly:
+      # https://jfrog.com/help/r/artifactory-how-to-connect-and-publish-simple-build-using-github-action-with-jfrog-cli/artifactory-how-to-connect-and-publish-simple-build-using-github-action-with-jfrog-cli
+      # TODO try the following, the uncomment next steps https://dev.to/anthonyikeda/github-actions-maven-artifactory-4h65
+#      - name: Compile the project
+#        run: |
+#          mvn -B compile
 #
 #      - name: Launch the tests without AT or IT
 #        run: |
