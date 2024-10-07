@@ -53,4 +53,6 @@ jobs:
         with:
           name: conf-files-in-resources-config
           path: |
+            pwd
+            ls -alrt
             src/main/resources/config/*.conf
