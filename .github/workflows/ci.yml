@@ -53,4 +53,4 @@ jobs:
         with:
           name: conf-files-in-resources-config
           path: |
-            src/main/resources/config/**/*.conf
+            src/main/resources/config/*.conf
