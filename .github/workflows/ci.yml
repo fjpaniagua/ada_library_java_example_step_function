@@ -18,9 +18,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Build information
-        run: echo "Workflow with name ${{ github.workflow }} triggered by the ${{ github.event_name }} done by ${{ github.actor }}"
-
       - name: Verify
         uses: devecorsoft/verify-version@v1
         with:
@@ -38,28 +35,8 @@ jobs:
           JF_URL: ${{ vars.ARTIFACTORY_URL }}
           JF_ACCESS_TOKEN: ${{ secrets.ARTIFACTORY_ACCESS_TOKEN }}
 
-      # The following configuration does not work properly:
-      # https://jfrog.com/help/r/artifactory-how-to-connect-and-publish-simple-build-using-github-action-with-jfrog-cli/artifactory-how-to-connect-and-publish-simple-build-using-github-action-with-jfrog-cli
-      # TODO try the following, the uncomment next steps https://dev.to/anthonyikeda/github-actions-maven-artifactory-4h65
-#      - name: Compile the project
-#        run: |
-#          mvn -B compile
-#
-#      - name: Launch the tests without AT or IT
-#        run: |
-#          mvn -B test -pl !testAT -pl !testIT
-#
-#      - name: Install the dependencies
-#        run: |
-#          mvn -Binstall -Dmaven.test.skip=true -DskipTests -pl !testAT -pl !testIT -Dmaven.wagon.http.retryHandler.count=3
-
-#      - name: Run the tests in parallel
-#        run: |
-#          parallel --gnu -a tests.parallel || false
-#
-#      - name: Deploy artifacts to Artifactory
-#        run: |
-#          mvn antrun:run@attach-shaded-jar deploy -Dskip=true -Dmaven.shade.skip=true -Dmaven.main.skip=true -Djacoco.skip=true -Dmaven.javadoc.skip=true -Dmaven.test.skip=true -DskipTests -Dmaven.install.skip=true -Dspring-boot.repackage.skip=true -Ddocker.skip=truemvn antrun:run@attach-shaded-jar deploy -B ${profilesOpt} -Dskip=true -Dmaven.shade.skip=true -Dmaven.main.skip=true -Djacoco.skip=true -Dmaven.javadoc.skip=true -Dmaven.test.skip=true -DskipTests -Dmaven.install.skip=true -Dspring-boot.repackage.skip=true -Ddocker.skip=true -Dmaven.resources.skip=true -DskipAnnotationProcessing=true -DretryFailedDeploymentCount=2 -pl !testAT
+      - name: Compile the project
+        run: make build
 
       - name: Deploy Configs to Artifactory
         uses: actions/upload-artifact@v4
@@ -68,7 +45,4 @@ jobs:
           path: ada_library_java_example_step_function-lib/src/main/resources/config/**/*.conf
 
       - name: Generate and deploy docker image
-        run: |
-          docker login docker.pkg.github.com --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}"
-          docker build -t docker.pkg.github.com/fjpaniagua/ada_library_java_example/ada_library_java_example:latest . -f ada_library_java_example_step_function-lib/src/main/resources/Dockerfile
-          docker push docker.pkg.github.com/fjpaniagua/ada_library_java_example/ada_library_java_example:latest
+        run: make docker
